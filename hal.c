@@ -3,27 +3,34 @@
 
 void HAL_GPIO_init(GPIO_TypeDef * GPIOx, GPIO_InitTypeDef * GPIO_Init)
 {
+	//port select to choice interrupt 9.4.1 manual reference
+	int PORT_Select = 0;
 	GPIO_TypeDef  rezo = {0};
 	//enable port
 	if(GPIOx == GPIOA)
 	{
 		RCC->APB2ENR |= (1<<2);
+		PORT_Select = 0;
 	}
 	else if(GPIOx == GPIOB)
 	{
 		RCC->APB2ENR |= (1<<3);
+		PORT_Select = 1;
 	}
 	else if(GPIOx == GPIOC)
 	{
 		RCC->APB2ENR |= (1<<4);
+		PORT_Select = 2;
 	}
 	else if(GPIOx == GPIOD)
 	{
 		RCC->APB2ENR |= (1<<5);
+		PORT_Select = 3;
 	}
 	else if(GPIOx == GPIOE)
 	{
 		RCC->APB2ENR |= (1<<6);
+		PORT_Select = 4;
 	}
 	//configuration input or output of pin
 	if(GPIO_Init->GPIO_Pin <=7)
@@ -63,36 +70,15 @@ void HAL_GPIO_init(GPIO_TypeDef * GPIOx, GPIO_InitTypeDef * GPIO_Init)
 		}
 	
 		//configuration interrupt
-		HAL_GPIO_Init_Interrupt(GPIOx, GPIO_Init);
+		HAL_GPIO_Init_Interrupt(GPIOx, GPIO_Init, PORT_Select);
 		
 		//*GPIOx = rezo;
 		
 }
 
-void HAL_GPIO_Init_Interrupt(GPIO_TypeDef * GPIOx, GPIO_InitTypeDef * GPIO_Init)
+void HAL_GPIO_Init_Interrupt(GPIO_TypeDef * GPIOx, GPIO_InitTypeDef * GPIO_Init, int PORT_Select)
 {
-	//port select to choice interrupt 9.4.1 manual reference
-	int PORT_Select = 0;
-	if(GPIOx == GPIOA)
-	{
-		PORT_Select = 0;
-	}
-	else if(GPIOx == GPIOB)
-	{
-		PORT_Select = 1;
-	}
-	else if(GPIOx == GPIOC)
-	{
-		PORT_Select = 2;
-	}
-	else if(GPIOx == GPIOD)
-	{
-		PORT_Select = 3;
-	}
-	else if(GPIOx == GPIOE)
-	{
-		PORT_Select = 4;
-	}
+	
 
 	if(GPIO_Init->GPIO_IT == GPIO_IT_RISING)
 	{

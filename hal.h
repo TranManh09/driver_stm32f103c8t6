@@ -85,7 +85,7 @@ typedef struct
 	
 }GPIO_InitTypeDef;
 void HAL_GPIO_init(GPIO_TypeDef * GPIOx, GPIO_InitTypeDef * GPIO_Init);
-void HAL_GPIO_Init_Interrupt(GPIO_TypeDef * GPIOx, GPIO_InitTypeDef * GPIO_Init);
+void HAL_GPIO_Init_Interrupt(GPIO_TypeDef * GPIOx, GPIO_InitTypeDef * GPIO_Init, int PORT_Select);
 void HAL_GPIO_WritePin(GPIO_TypeDef * GPIOx, uint32_t pin, uint8_t PinState);
 uint8_t HAL_GPIO_ReadPin(GPIO_TypeDef * GPIOx, uint32_t pin);
 void HAL_GPIO_TogglePin( GPIO_TypeDef * const GPIOx, uint32_t pin);
